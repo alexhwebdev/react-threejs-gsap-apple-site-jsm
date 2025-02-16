@@ -49,12 +49,13 @@ const VideoCarousel = () => {
     });
   }, [isEnd, videoId]);
 
+  // Pagination progress animation
   useEffect(() => {
     let currentProgress = 0;
     let span = videoSpanRef.current;
-    console.log('videoSpanRef ', videoSpanRef)
-    console.log('span ', span)
-    console.log('span[videoId] ', span[videoId])
+    // console.log('videoSpanRef ', videoSpanRef)
+    // console.log('span ', span)
+    // console.log('span[videoId] ', span[videoId])
     // console.log('isPlaying ', isPlaying)
 
     if (span[videoId]) {
@@ -103,6 +104,7 @@ const VideoCarousel = () => {
       console.log('animProgressIndicator ', animProgressIndicator)
       console.log('videoId ', videoId)
 
+      // If video id = 0, restart animation
       if (videoId == 0) {
         animProgressIndicator.restart();
       }
@@ -112,7 +114,7 @@ const VideoCarousel = () => {
       const animUpdate = () => {
         animProgressIndicator.progress(
           videoRef.current[videoId].currentTime /
-            hightlightsSlides[videoId].videoDuration
+          hightlightsSlides[videoId].videoDuration
         );
       };
       console.log('animUpdate ', animUpdate)
@@ -127,6 +129,7 @@ const VideoCarousel = () => {
     }
   }, [videoId, startPlay]);
 
+  // Trigger Play
   useEffect(() => {
     console.log('loadedData ', loadedData)
     if (loadedData.length > 3) {
@@ -167,7 +170,10 @@ const VideoCarousel = () => {
     }
   };
 
-  const handleLoadedMetaData = (i, e) => setLoadedData((pre) => [...pre, e]);
+  // i = index, e = event. 
+  const handleLoadedMetaData = (i, e) => setLoadedData(
+    (pre) => [...pre, e]
+  );
 
   return (
     <>
@@ -207,6 +213,7 @@ const VideoCarousel = () => {
                       };
                     });
                   }}
+                  // This gets triggered once metadata of video has loaded. Once loaded, we get the event and call handleLoadedMetaData and pass index and event.
                   onLoadedMetadata={(e) => handleLoadedMetaData(i, e)}
                 >
                   <source src={list.video} type="video/mp4" />
@@ -252,8 +259,8 @@ const VideoCarousel = () => {
               isLastVideo
                 ? () => handleProcess("video-reset")
                 : !isPlaying
-                ? () => handleProcess("play")
-                : () => handleProcess("pause")
+                  ? () => handleProcess("play")
+                  : () => handleProcess("pause")
             }
           />
         </button>

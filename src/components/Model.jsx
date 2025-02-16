@@ -84,6 +84,7 @@ const Model = () => {
             <Canvas
               className="w-full h-full"
               style={{
+                // border: '2px solid red',
                 position: 'fixed',
                 top: 0,
                 bottom: 0,
@@ -91,8 +92,9 @@ const Model = () => {
                 right: 0,
                 overflow: 'hidden'
               }}
-              eventSource={document.getElementById('root')}
+              eventSource={document.getElementById('root')} // This means the canvas will listen for user interactions happening on this root element instead of the default (which might be the canvas itself).
             >
+              {/* View.Port : way to render multiple views of model in same canvas. */}
               <View.Port />
             </Canvas>
           </div>
@@ -101,8 +103,10 @@ const Model = () => {
             <p className="text-sm font-light text-center mb-5">{model.title}</p>
 
             <div className="flex-center">
+              {/* ----- COLOR CONTAINER : setModel ----- */}
               <ul className="color-container">
                 {models.map((item, i) => (
+                  // console.log('item ', item),
                   <li 
                     key={i} 
                     className="w-6 h-6 rounded-full mx-2 cursor-pointer" 
@@ -112,13 +116,17 @@ const Model = () => {
                 ))}
               </ul>
 
+              {/* ----- SIZE BTN : setSize ----- */}
               <button className="size-btn-container">
                 {sizes.map(({ label, value }) => (
                   <span 
                     key={label} 
                     className="size-btn" 
                     style={{ 
-                      backgroundColor: size === value ? 'white' : 'transparent', color: size === value ? 'black' : 'white'
+                      backgroundColor: size === value 
+                        ? 'white' : 'transparent', 
+                      color: size === value 
+                        ? 'black' : 'white'
                     }} 
                     onClick={() => setSize(value)}
                   >
